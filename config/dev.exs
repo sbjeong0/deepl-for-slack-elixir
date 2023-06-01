@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :deep_thought, DeepThought.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "jeongsubin",
+  password: "",
   hostname: "localhost",
   database: "deep_thought_dev",
   show_sensitive_data_on_connection_error: true,

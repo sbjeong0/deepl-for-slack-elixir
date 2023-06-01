@@ -8,7 +8,7 @@ defmodule DeepThought.DeepL.API do
 
   use Tesla
 
-  plug Tesla.Middleware.BaseUrl, "https://api.deepl.com/v2"
+  plug Tesla.Middleware.BaseUrl, "https://api-free.deepl.com/v2"
   plug Tesla.Middleware.Query, auth_key: Application.get_env(:deep_thought, :deepl)[:auth_key]
   plug Tesla.Middleware.EncodeFormUrlencoded
   plug Tesla.Middleware.DecodeJson
