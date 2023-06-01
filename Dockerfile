@@ -16,8 +16,7 @@ RUN apk --no-cache --update add \
 COPY ./ /app
 WORKDIR /app
 
-RUN mix local.hex --force
-RUN mix local.rebar --force
+RUN mix do local.hex --force, local.rebar --force
 RUN mix deps.get
 RUN mix assets.deploy
 RUN mix do compile, release
