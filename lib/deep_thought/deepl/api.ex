@@ -9,8 +9,8 @@ defmodule DeepThought.DeepL.API do
   use Tesla
 
   plug Tesla.Middleware.BaseUrl, "https://api-free.deepl.com/v2"
-  plug Tesla.Middleware.Query, auth_key: Application.get_env(:deep_thought, :deepl)[:auth_key]
-  plug Tesla.Middleware.EncodeFormUrlencoded
+  plug Tesla.Middleware.Headers, [{"Authorization", deepl_bearer_token()}]
+  plug Tesla.Middleware.JSON
   plug Tesla.Middleware.DecodeJson
   plug Tesla.Middleware.Logger
   plug Tesla.Middleware.Timeout, timeout: 10_000
@@ -34,9 +34,12 @@ defmodule DeepThought.DeepL.API do
   @spec translate_request_body(String.t(), String.t()) :: %{String.t() => String.t()}
   defp translate_request_body(text, target_language),
     do: %{
-      "text" => text,
+      "text" => [text],
       "target_lang" => target_language,
       "tag_handling" => "xml",
-      "ignore_tags" => "c,d,e,l,u"
+      "ignore_tags" => ["c","d","e","l","u"]
     }
+
+  @spec deepl_bearer_token() :: String.t()
+  defp deepl_bearer_token, do: "DeepL-Auth-Key " <> Application.get_env(:deep_thought, :deepl)[:auth_key]
 end
